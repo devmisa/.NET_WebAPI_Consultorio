@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,6 @@ using Consultorio.Services;
 using Consultorio.Context;
 using Consultorio.Repository.Interfaces;
 using Consultorio.Repository;
-using System.Text.Json.Serialization;
 
 namespace Consultorio
 {
@@ -32,6 +32,7 @@ namespace Consultorio
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IBaseRepository, BaseRepository>();
             services.AddScoped<IPacienteRepository, PacienteRepository>();
+            services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
             services.AddDbContext<ConsultorioContext>(options => 
             {
                 options.UseMySQL(Configuration.GetConnectionString("Default"), assembly => assembly.MigrationsAssembly(typeof(ConsultorioContext).Assembly.FullName));

@@ -1,7 +1,6 @@
-﻿using Consultorio.Context;
+﻿using System.Threading.Tasks;
+using Consultorio.Context;
 using Consultorio.Repository.Interfaces;
-using System;
-using System.Threading.Tasks;
 
 namespace Consultorio.Repository
 {
