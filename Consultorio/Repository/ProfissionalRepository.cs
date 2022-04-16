@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Consultorio.Context;
 using Consultorio.Models.Dtos;
-using Consultorio.Repository.Interfaces;
 using Consultorio.Models.Entities;
+using Consultorio.Repository.Interfaces;
 
 namespace Consultorio.Repository
 {
@@ -23,7 +23,6 @@ namespace Consultorio.Repository
             return await _context.Profissionais
                  .Select(x => new ProfissionalDto {Id = x.Id, Nome = x.Nome, Ativo = x.Ativo}).ToListAsync();
         }
-
         public async Task<Profissional> GetProfissionalById(int id)
         {
             return await _context.Profissionais

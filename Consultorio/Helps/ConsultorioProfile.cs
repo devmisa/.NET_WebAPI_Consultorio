@@ -31,6 +31,7 @@ namespace Consultorio.Helps
             CreateMap<ProfissionalAtualizarDto, Profissional>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
+            CreateMap<Especialidade, EspecialidadeDetalhesDto>();
         }
     }
 }
