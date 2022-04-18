@@ -6,7 +6,7 @@ namespace Consultorio.Map
 {
     public class ProfissionalMap : BaseMap<Profissional>
     {
-        public ProfissionalMap() : base("tb_profissional") 
+        public ProfissionalMap() : base ("tb_profissional") 
         {}
 
         public override void Configure(EntityTypeBuilder<Profissional> builder)

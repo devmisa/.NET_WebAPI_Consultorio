@@ -26,6 +26,7 @@ namespace Consultorio.Helps
                     .ForMember(dest => dest.TotalConsultas, opt => opt.MapFrom(src => src.Consultas.Count()))
                     .ForMember(dest => dest.Especialidades, opt => opt.MapFrom(src =>
                     src.Especialidades.Select(x => x.Nome).ToArray()));
+            CreateMap<Profissional, ProfissionalDto>();
 
             CreateMap<ProfissionalAdicionarDto, Profissional>();
             CreateMap<ProfissionalAtualizarDto, Profissional>()

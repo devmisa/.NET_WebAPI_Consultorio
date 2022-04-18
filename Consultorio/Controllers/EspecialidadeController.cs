@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Consultorio.Repository.Interfaces;
@@ -23,7 +21,7 @@ namespace Consultorio.Controllers
             _mapper = mapper;
         }
 
-       [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             var especialidades = await _repository.GetEspecialidades();
@@ -44,7 +42,7 @@ namespace Consultorio.Controllers
             var especialidadeRetorno = _mapper.Map<EspecialidadeDetalhesDto>(especialidade);
 
             return especialidadeRetorno != null
-                ? Ok("especialidadeRetorno")
+                ? Ok(especialidadeRetorno)
                 : NotFound("Especialidades não encontradas");
         }
 
@@ -89,5 +87,7 @@ namespace Consultorio.Controllers
                 ? Ok("Status atualizado")
                 : BadRequest("Erro ao atuailizar status");
         }
+
     }
 }
+

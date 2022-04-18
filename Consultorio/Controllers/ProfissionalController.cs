@@ -101,5 +101,33 @@ namespace Consultorio.Controllers
                 ? Ok("Profissional deletado com êxito!")
                 : BadRequest("Erro ao deletar o Profissional");
         }
+
+        [HttpPost("adicionar-profissional")]
+
+        public async Task<IActionResult> PostProfissionalEspecialidade(ProfissionalEspecialidadeAdicionarDto profissional)
+        {
+            int profissionalId = profissional.ProfissionalId;
+            int especialidadeId = profissional.EspecialidadeId;
+
+            if (profissionalId <= 0 || especialidadeId <= 0)
+                return BadRequest("Dados inválidos");
+
+            var profissionalEspecialidade = await _repository.GetProfissionalEspecialidade(profissionalId, especialidadeId);
+
+            if (profissionalEspecialidade != null)
+                return Ok("Especialidade já cadastrada");
+
+            var especialidadeAdicionar = new ProfissionalEspecialidade
+            {
+                EspecialidadeId = especialidadeId, 
+                ProfissionalId = profissionalId
+            };
+
+            _repository.Add(especialidadeAdicionar);
+
+            return await _repository.SaveChangesAsync()
+                ? Ok("Especialidade adicionada com êxito!")
+                : BadRequest("Erro ao adicionar especialidade");
+        }
     }
 }

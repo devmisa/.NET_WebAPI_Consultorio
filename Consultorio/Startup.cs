@@ -33,17 +33,18 @@ namespace Consultorio
             services.AddScoped<IBaseRepository, BaseRepository>();
             services.AddScoped<IPacienteRepository, PacienteRepository>();
             services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
+            services.AddScoped<IEspecialidadeRepository, EspecialidadeRepository>();
+
             services.AddDbContext<ConsultorioContext>(options => 
             {
-                options.UseMySQL(Configuration.GetConnectionString("Default"), assembly => assembly.MigrationsAssembly(typeof(ConsultorioContext).Assembly.FullName));
+                options.UseMySQL(Configuration.GetConnectionString("Default"), 
+                    assembly => assembly.MigrationsAssembly(typeof(ConsultorioContext).Assembly.FullName));
             });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Consultorio", Version = "v1" });
             });
             services.AddScoped<IEmailService, EmailService>();
-            
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,10 +58,6 @@ namespace Consultorio
             }
 
             app.UseRouting();
-
-            var nomeCanal = Configuration["NomeCanal"];
-
-            var stringconexao = Configuration.GetConnectionString(name:"App");
 
             app.UseAuthorization();
 
