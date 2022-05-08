@@ -41,8 +41,8 @@ namespace Consultorio.Controllers
 
             var profissionalRetorno = _mapper.Map<ProfissionalDetalhesDto>(profissional);
 
-            return profissionalRetorno != null 
-                ? Ok(profissionalRetorno)  
+            return profissionalRetorno != null
+                ? Ok(profissionalRetorno)
                 : NotFound("Profissional não existe na base");
         }
 
@@ -66,12 +66,12 @@ namespace Consultorio.Controllers
 
         public async Task<IActionResult> Put(int id, ProfissionalAtualizarDto profissional)
         {
-            if (id <= 0) 
+            if (id <= 0)
                 return BadRequest("Profissional inválido");
 
             var profissionalBanco = await _repository.GetProfissionalById(id);
 
-            if (profissionalBanco == null) 
+            if (profissionalBanco == null)
                 return NotFound("Profissional não encontrado na base de dados");
 
             var profissionalAtualizar = _mapper.Map(profissional, profissionalBanco);
@@ -119,7 +119,7 @@ namespace Consultorio.Controllers
 
             var especialidadeAdicionar = new ProfissionalEspecialidade
             {
-                EspecialidadeId = especialidadeId, 
+                EspecialidadeId = especialidadeId,
                 ProfissionalId = profissionalId
             };
 
@@ -128,6 +128,25 @@ namespace Consultorio.Controllers
             return await _repository.SaveChangesAsync()
                 ? Ok("Especialidade adicionada com êxito!")
                 : BadRequest("Erro ao adicionar especialidade");
+        }
+
+        [HttpDelete("{profissionalId}/deletar-especialidade/{especialidadeId}")]
+
+        public async Task<IActionResult> DeleteProfissionalEspecialidade(int profissionalId, int especialidadeId)
+        {
+            if (profissionalId <= 0 || especialidadeId <= 0)
+                BadRequest("Dados inválidos");
+
+            var profissionalEspecialidade = await _repository.GetProfissionalEspecialidade(profissionalId, especialidadeId);
+
+            if (profissionalEspecialidade != null)
+                return Ok("Especialidade não cadastrada");
+
+            _repository.Delete(profissionalEspecialidade);
+
+            return await _repository.SaveChangesAsync()
+                ? Ok("Especialidade deletada do profissional!")
+                : BadRequest("Houve um erro ao deletar especialidade do profissional");
         }
     }
 }

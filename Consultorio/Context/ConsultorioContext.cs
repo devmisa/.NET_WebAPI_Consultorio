@@ -1,5 +1,5 @@
-﻿using Consultorio.Models.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Consultorio.Models.Entities;
 
 namespace Consultorio.Context
 {

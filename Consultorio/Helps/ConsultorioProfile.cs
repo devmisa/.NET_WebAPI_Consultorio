@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Linq;
 using Consultorio.Models.Dtos;
 using Consultorio.Models.Entities;
-using System.Linq;
+using AutoMapper;
 
 namespace Consultorio.Helps
 {
@@ -10,6 +10,7 @@ namespace Consultorio.Helps
         public ConsultorioProfile()
         {
             CreateMap<Paciente, PacienteDetalhesDto>().ReverseMap();
+            CreateMap<Paciente, PacienteDto>();
             CreateMap<ConsultaDto, Consulta>()
                 .ForMember(dest => dest.Profissional, opt => opt.Ignore())
                 .ForMember(dest => dest.Especialidade, opt => opt.Ignore());
@@ -17,6 +18,11 @@ namespace Consultorio.Helps
             CreateMap<Consulta, ConsultaDto>()
                 .ForMember(dest => dest.Especialidade, opt => opt.MapFrom(src => src.Especialidade.Nome))
                 .ForMember(dest => dest.Profissional, opt => opt.MapFrom(src => src.Profissional.Nome));
+
+            CreateMap<Consulta, ConsultaDetalhesDto>();
+            CreateMap<ConsultaAdicionarDto, Consulta>();
+            CreateMap<ConsultaAtualizarDto, Consulta>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<PacienteAdicionarDto, Paciente>();
             CreateMap<PacienteAtualizarDto, Paciente>()
@@ -33,6 +39,7 @@ namespace Consultorio.Helps
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
             CreateMap<Especialidade, EspecialidadeDetalhesDto>();
+            CreateMap<Especialidade, EspecialidadeDto>();
         }
     }
 }
